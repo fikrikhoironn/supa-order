@@ -51,18 +51,18 @@ export default function OrderList() {
                     <Thead>
                         <Tr>
                             <Th>#</Th>
+                            <Th>Product Title</Th>
                             <Th>Product Variant ID</Th>
                             <Th>Quantity</Th>
-                            <Th>Product Title</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
                         {orders.map((order, index) => (
                             <Tr key={order.product_variant_id}>
                                 <Td>{index + 1}</Td>
+                                <Td>{order.products.product_id.title}</Td>
                                 <Td>{order.product_variant_id}</Td>
                                 <Td>{order.quantity}</Td>
-                                <Td>{order.products.product_id.title}</Td>
                             </Tr>
                         ))}
                     </Tbody>
