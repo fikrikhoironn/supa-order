@@ -40,7 +40,7 @@ export default function ProductsPage() {
             <Wrapper>
                 <div className="flex flex-col justify-center items-center">
                     <h1 className="text-2xl font-bold my-4">Products</h1>
-                    <div className="flex flex-row gap-8">
+                    <div className="flex flex-row flex-wrap gap-8">
                         {products.map((product: Product) => (
                             <ProductCard key={product.id} id={product.id} title={product.title} />
                         ))}

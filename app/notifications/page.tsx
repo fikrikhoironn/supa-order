@@ -16,6 +16,22 @@ interface Notification {
 export default function Notifications() {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
+    const channel = supabase
+        .channel('schema-db-changes')
+        .on(
+            'postgres_changes',
+            {
+                event: 'INSERT',
+                schema: 'public',
+                table: 'notifications',
+            },
+            (payload) => {
+                // @ts-ignore
+                setNotifications((prevNotifications) => [...prevNotifications, payload.new]);
+            }
+        )
+        .subscribe();
+
     useEffect(() => {
         const fetchNotifications = async () => {
             const { data, error } = await getNotifications();

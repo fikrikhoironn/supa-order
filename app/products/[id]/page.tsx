@@ -63,7 +63,7 @@ export default function ProductsPage({params}: PageProps) {
                                 </Link>
                             </Center>
                             <Center my="8">
-                                <HStack>
+                                <HStack className="flex-wrap">
                                     {product.product_variants.map((variant: ProductVariant) => (
                                         <ProductVariantCard key={variant.id} id={variant.id} price={variant.price}/>
                                     ))}
