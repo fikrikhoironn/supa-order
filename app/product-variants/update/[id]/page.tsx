@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import {getProductVariant} from "@/services/products";
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
-import {Box, Button, Input, Text, VStack, useToast} from "@chakra-ui/react";
+import {Box, Button, Input, Text, VStack, useToast, Center, Spinner} from "@chakra-ui/react";
 
 interface PageProps {
     params: {
@@ -85,7 +85,21 @@ export default function UpdateProduct({ params }: PageProps) {
     };
 
     if (!productVariant) {
-        return <div>Loading...</div>;
+        return (
+            <>
+                <Center py="12rem">
+                    <Spinner
+                        thickness='4px'
+                        speed='0.65s'
+                        emptyColor='gray.200'
+                        color='blue.500'
+                        size='xl'
+                    />;
+                </Center>
+            </>
+
+        )
+
     }
 
     return (
