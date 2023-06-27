@@ -116,11 +116,11 @@ export default function CreateOrder() {
                                     id="product-variant-select"
                                     value={selectedProductVariant}
                                     onChange={handleProductVariantChange}
-                                    className="border border-gray-300 px-2 py-1"
+                                    className="border border-gray-300 px-2 py-1 text-black"
                                 >
                                     <option value={0}>Select Product Variant</option>
                                     {productVariants.map((variant) => (
-                                        <option key={variant.id} value={variant.id}>
+                                        <option  key={variant.id} value={variant.id}>
                                             {variant.product.title} - Price: {variant.price}
                                         </option>
                                     ))}
@@ -136,7 +136,8 @@ export default function CreateOrder() {
                                     value={quantity}
                                     min="1"
                                     onChange={handleQuantityChange}
-                                    className="border border-gray-300 px-2 py-1"
+                                    className="border border-gray-300 px-2 py-1 text-black"
+
                                 />
                             </div>
                             <button
