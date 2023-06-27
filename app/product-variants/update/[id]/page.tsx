@@ -2,6 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
 import {getProductVariant} from "@/services/products";
+import Navbar from "@/components/common/navbar";
+import Wrapper from "@/components/common/wrapper";
+import {Box, Button, Input, Text, VStack, useToast} from "@chakra-ui/react";
 
 interface PageProps {
     params: {
@@ -12,6 +15,7 @@ interface PageProps {
 export default function UpdateProduct({ params }: PageProps) {
     const [productVariant, setProductVariant] = useState(null);
     const [price, setPrice] = useState('');
+    const toast = useToast();
 
     useEffect(() => {
         // Fetch the products variant from the database
@@ -36,7 +40,14 @@ export default function UpdateProduct({ params }: PageProps) {
         event.preventDefault();
 
         if (!price) {
-            alert('Please enter a price.');
+            console.error('Price must not be blank');
+            toast({
+                title: "Price must not be blank",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
             return;
         }
 
@@ -53,8 +64,23 @@ export default function UpdateProduct({ params }: PageProps) {
 
         if (error) {
             console.error('Error updating products variant:', error);
+            toast({
+                title: "Error updating products variant",
+                description: error.message,
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
         } else {
-            alert('Product variant updated successfully!');
+            console.log('Product variant updated successfully');
+            toast({
+                title: "Product variant updated successfully",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
         }
     };
 
@@ -63,25 +89,26 @@ export default function UpdateProduct({ params }: PageProps) {
     }
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Update Product Variant</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="price-input" className="block font-bold mb-2">
-                        Price:
-                    </label>
-                    <input
-                        type="number"
-                        id="price-input"
-                        value={price}
-                        onChange={handlePriceChange}
-                        className="border border-gray-300 px-2 py-1"
-                    />
-                </div>
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
-                    Update
-                </button>
-            </form>
-        </div>
+        <>
+            <Navbar />
+            <Wrapper>
+                <Box py="8rem">
+                    <form onSubmit={handleSubmit}>
+                        <VStack spacing={4} py="2rem">
+                            <Text fontSize="2xl" fontWeight="black">Update Variant {params.id}</Text>
+                            <label htmlFor="price">price:</label>
+                            <Input
+                                type="text"
+                                id="price"
+                                value={price}
+                                onChange={handlePriceChange}
+                                width="16rem"
+                            />
+                            <Button type="submit" variant='outline' colorScheme="biru" w="8rem">Update</Button>
+                        </VStack>
+                    </form>
+                </Box>
+            </Wrapper>
+        </>
     );
 }

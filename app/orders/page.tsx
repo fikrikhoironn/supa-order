@@ -12,7 +12,7 @@ interface Product {
 interface Order {
     product_variant_id: number;
     quantity: number;
-    product: Product;
+    products: Product;
 }
 
 export default function OrderList(): JSX.Element {
@@ -44,7 +44,7 @@ export default function OrderList(): JSX.Element {
                 <div key={order.product_variant_id}>
                     <h2>Product Variant ID: {order.product_variant_id}</h2>
                     <p>Quantity: {order.quantity}</p>
-                    <p>Product Title: {order.product.product_id.title}</p>
+                    <p>Product Title: {order.products.product_id.title}</p>
                 </div>
             ))}
         </div>

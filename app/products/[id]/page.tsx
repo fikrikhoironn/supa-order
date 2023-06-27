@@ -1,51 +1,72 @@
 'use client'
 import {useEffect, useState} from 'react';
-import {getProducts} from "@/services/products";
+import {getProduct} from "@/services/products";
 import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
-import ProductCard from "@/components/products/product-card";
-import { Box, Button} from "@chakra-ui/react";
+import {Box, Button, Center, HStack, Text} from "@chakra-ui/react";
+import ProductVariantCard from "@/components/product-variants/product-variant-card";
 import Link from "next/link";
 
+interface ProductVariant {
+    id: number;
+    product_id: number;
+    price: number;
+}
+
+interface PageProps {
+    params: {
+        id: number;
+    };
+}
 
 interface Product {
     id: number;
     title: string;
+    product_variants: ProductVariant[];
 }
 
-export default function ProductsPage() {
+export default function ProductsPage({params}: PageProps) {
     const [products, setProducts] = useState<any>([]);
-
+    const productId = params.id;
     useEffect(() => {
         fetchProducts();
     }, []);
 
     const fetchProducts = async (): Promise<void> => {
         try {
-            const {data, error} = await getProducts();
+            const {data, error} = await getProduct(params.id);
             console.log(data);
             if (error) {
-                console.error('Error fetching products:', error);
+                console.error('Error fetching products-variants:', error);
                 return;
             }
             setProducts(data);
         } catch (error) {
-            console.error('Error fetching products:', error);
+            console.error('Error fetching products-variants:', error);
         }
     };
 
+
     return (
         <>
-            <Navbar />
+            <Navbar/>
             <Wrapper>
-                <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-2xl font-bold my-4">Products</h1>
-                    <div className="flex flex-row gap-8">
-                        {products.map((product: Product) => (
-                            <ProductCard key={product.id} id={product.id} title={product.title} />
-                        ))}
-                    </div>
-                </div>
+                <Box py="2rem">
+                    {products.map((product: Product) => (
+                        <div key={product.id} className="mb-6">
+                            <Center>
+                                <Text fontSize="2xl" fontWeight="black">{product.title}</Text>
+                            </Center>
+                            <Center my="8">
+                                <HStack>
+                                    {product.product_variants.map((variant: ProductVariant) => (
+                                        <ProductVariantCard id={variant.id} price={variant.price}/>
+                                    ))}
+                                </HStack>
+                            </Center>
+                        </div>
+                    ))}
+                </Box>
                 <Box
                     position="fixed"
                     bottom={4}
@@ -72,12 +93,11 @@ export default function ProductsPage() {
                         size="md"
                         aria-label="Scroll to top"
                     >
-                        <Link   href="/products/create">
-                            Add Product
+                        <Link href={`/product-variants/create/${productId}`}>
+                            Add Variant
                         </Link>
                     </Button>
                 </Box>
-
             </Wrapper>
         </>
     );

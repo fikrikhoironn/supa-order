@@ -1,6 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabase';
+import Navbar from "@/components/common/navbar";
+import Wrapper from "@/components/common/wrapper";
+import {Box, Button, Input, Text, VStack, useToast} from "@chakra-ui/react";
 
 interface PageProps {
     params: {
@@ -9,8 +12,10 @@ interface PageProps {
 }
 
 export default function UpdateProduct({ params }: PageProps) {
+    const toast = useToast();
     const [product, setProduct] = useState<any>(null);
     const [title, setTitle] = useState('');
+    const [dbTitle, setDbTitle] = useState('');
 
     useEffect(() => {
         // Fetch the product from the database
@@ -26,6 +31,7 @@ export default function UpdateProduct({ params }: PageProps) {
             } else {
                 setProduct(data);
                 setTitle(data.title);
+                setDbTitle(data.title);
             }
         };
 
@@ -40,7 +46,14 @@ export default function UpdateProduct({ params }: PageProps) {
         event.preventDefault();
 
         if (!title) {
-            alert('Please enter a title.');
+            console.error('Title must not be blank');
+            toast({
+                title: "Title must not be blank",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
             return;
         }
 
@@ -57,8 +70,22 @@ export default function UpdateProduct({ params }: PageProps) {
 
         if (error) {
             console.error('Error updating product:', error);
+            toast({
+                title: "Error updating product",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
         } else {
-            alert('Product updated successfully!');
+            setDbTitle(title);
+            toast({
+                title: "Product updated successfully",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "top"
+            })
         }
     };
 
@@ -67,25 +94,26 @@ export default function UpdateProduct({ params }: PageProps) {
     }
 
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">Update Product</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-4">
-                    <label htmlFor="title-input" className="block font-bold mb-2">
-                        Title:
-                    </label>
-                    <input
-                        type="text"
-                        id="title-input"
-                        value={title}
-                        onChange={handleTitleChange}
-                        className="border border-gray-300 px-2 py-1"
-                    />
-                </div>
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
-                    Update
-                </button>
-            </form>
-        </div>
+        <>
+            <Navbar />
+            <Wrapper>
+                <Box py="8rem">
+                    <form onSubmit={handleSubmit}>
+                        <VStack spacing={4} py="2rem">
+                            <Text fontSize="2xl" fontWeight="black">Update Product {dbTitle}</Text>
+                            <label htmlFor="title">Title:</label>
+                            <Input
+                                type="text"
+                                id="title"
+                                value={title}
+                                onChange={handleTitleChange}
+                                width="16rem"
+                            />
+                            <Button type="submit" variant='outline' colorScheme="biru" w="8rem">Update</Button>
+                        </VStack>
+                    </form>
+                </Box>
+            </Wrapper>
+        </>
     );
 }
