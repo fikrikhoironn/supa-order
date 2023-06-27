@@ -67,7 +67,7 @@ export default function ProductsPage({params}: PageProps) {
         <>
             <Navbar/>
             <Wrapper>
-                <Box py="2rem">
+                <Box py="2rem" className="min-h-screen">
                     {products.map((product: Product) => (
                         <div key={product.id} className="mb-6">
                             <Center>

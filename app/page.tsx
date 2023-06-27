@@ -5,7 +5,7 @@ import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
 import ProductCard from "@/components/products/product-card";
 import FloatingButton from "@/components/common/floating-button";
-import {useToast} from "@chakra-ui/react";
+import {Text, useToast} from "@chakra-ui/react";
 
 
 interface Product {
@@ -51,8 +51,8 @@ export default function ProductsPage() {
         <>
             <Navbar />
             <Wrapper>
-                <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-2xl font-bold my-4">Products</h1>
+                <div className="flex flex-col items-center min-h-screen">
+                    <Text className="text-2xl font-bold my-4">Products</Text>
                     <div className="flex flex-row flex-wrap gap-8">
                         {products.map((product: Product) => (
                             <ProductCard key={product.id} id={product.id} title={product.title} />

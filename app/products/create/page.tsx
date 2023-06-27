@@ -55,7 +55,7 @@ export default function CreateProduct() {
         <>
             <Navbar />
             <Wrapper>
-            <Box py="8rem">
+            <Box py="8rem" className="min-h-screen">
                 <form onSubmit={handleSubmit}>
                     <VStack spacing={4} py="2rem">
                         <Text fontSize="2xl" fontWeight="black">Create Product</Text>
@@ -66,6 +66,7 @@ export default function CreateProduct() {
                             value={title}
                             onChange={handleTitleChange}
                             width="16rem"
+                            variant="outline"
                         />
                         <Button type="submit" variant='outline' colorScheme="biru" w="8rem">Create</Button>
                     </VStack>

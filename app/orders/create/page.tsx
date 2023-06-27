@@ -104,7 +104,7 @@ export default function CreateOrder() {
         <>
             <Navbar/>
             <Wrapper>
-                <div className="container mx-auto p-4">
+                <div className="container mx-auto p-4 min-h-screen">
                     <Center>
                         <VStack>
                             <h1 className="text-2xl font-bold mb-4">Create Order</h1>

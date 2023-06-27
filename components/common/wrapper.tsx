@@ -6,7 +6,7 @@ interface Props {
 
 export default function Wrapper({ children }: Props) {
     return (
-        <div className="bg-white">
+        <div>
             <div className="max-w-[1280px] mx-auto">{children}</div>
         </div>
     );

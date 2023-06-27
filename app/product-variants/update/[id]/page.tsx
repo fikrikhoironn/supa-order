@@ -108,7 +108,7 @@ export default function UpdateProduct({ params }: PageProps) {
         <>
             <Navbar />
             <Wrapper>
-                <Box py="8rem">
+                <Box py="8rem" className="min-h-screen">
                     <form onSubmit={handleSubmit}>
                         <VStack spacing={4} py="2rem">
                             <Text fontSize="2xl" fontWeight="black">Update Variant {params.id}</Text>
