@@ -27,7 +27,14 @@ export default function UpdateProduct({ params }: PageProps) {
                 .single();
 
             if (error) {
-                console.error('Error fetching product:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching product",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                })
             } else {
                 setProduct(data);
                 setTitle(data.title);
@@ -46,7 +53,6 @@ export default function UpdateProduct({ params }: PageProps) {
         event.preventDefault();
 
         if (!title) {
-            console.error('Title must not be blank');
             toast({
                 title: "Title must not be blank",
                 status: "error",
@@ -69,7 +75,6 @@ export default function UpdateProduct({ params }: PageProps) {
             .eq('id', params.id);
 
         if (error) {
-            console.error('Error updating product:', error);
             toast({
                 title: "Error updating product",
                 status: "error",

@@ -42,7 +42,14 @@ export default function CreateOrder() {
                     setProductVariants(data);
                 }
             } catch (error) {
-                console.error('Error fetching products variants:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching products variants",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
         };
         fetchProductVariants();
@@ -51,7 +58,7 @@ export default function CreateOrder() {
 
     async function createOrder() {
         try {
-            const { data, error } = await insertOrder(selectedProductVariant, quantity)
+            const { error } = await insertOrder(selectedProductVariant, quantity)
             if (error) {
                 toast({
                     title: "Error",
@@ -63,7 +70,6 @@ export default function CreateOrder() {
                 })
             }
             else {
-                console.log('Order created successfully:', data);
                 toast({
                     title: "Order created successfully",
                     status: "success",
@@ -73,7 +79,6 @@ export default function CreateOrder() {
                 })
             }
         } catch (error) {
-            console.error('Error creating order:', error);
             toast({
                 title: "Error",
                 description: "Error creating order",

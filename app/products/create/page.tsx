@@ -18,7 +18,6 @@ export default function CreateProduct() {
         event.preventDefault();
 
         if (title.trim() === '') {
-            console.error('Title must not be blank');
             toast({
                 title: "Title must not be blank",
                 status: "error",
@@ -29,10 +28,9 @@ export default function CreateProduct() {
             return;
         }
 
-        const { data, error } = await supabase.from('products').insert([{ title }]);
+        const {error } = await supabase.from('products').insert([{ title }]);
 
         if (error) {
-            console.error('Error creating product:', error.message);
             toast({
                 title: "Error creating product",
                 description: error.message,
@@ -42,7 +40,6 @@ export default function CreateProduct() {
                 position: "top"
             })
         } else {
-            console.log('Product created successfully:', data);
             setTitle('');
             toast({
                 title: "Product created successfully",

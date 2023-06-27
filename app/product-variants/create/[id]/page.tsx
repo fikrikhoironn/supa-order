@@ -24,7 +24,6 @@ export default function CreateVariant({ params }: PageProps) {
     const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
         if (price.trim() === '') {
-            console.error('Price must not be blank');
             toast({
                 title: "Price must not be blank",
                 status: "error",
@@ -37,10 +36,8 @@ export default function CreateVariant({ params }: PageProps) {
         const { error } = await supabase.from('product_variants').insert([
             { product_id: Number(productId), price: Number(price) },
         ]);
-        console.log('product id: ',productId);
 
         if (error) {
-            console.error('Error creating variant:', error.message);
             toast({
                 title: "Error creating variant",
                 description: error.message,
@@ -50,7 +47,6 @@ export default function CreateVariant({ params }: PageProps) {
                 position: "top"
             })
         } else {
-            console.log('Variant created successfully');
             setPrice('');
             toast({
                 title: "Variant created successfully",

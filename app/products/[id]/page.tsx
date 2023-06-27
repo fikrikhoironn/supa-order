@@ -3,11 +3,12 @@ import {useEffect, useState} from 'react';
 import {getProduct} from "@/services/products";
 import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
-import {Box, Center, HStack, Text} from "@chakra-ui/react";
+import {Box, Center, HStack, Text, useToast} from "@chakra-ui/react";
 import ProductVariantCard from "@/components/product-variants/product-variant-card";
 import Link from "next/link";
 import {FaEdit} from "react-icons/fa";
-import FloatingButton from "@/components/common/floating-button";
+import FloatingButton from "@/components/common/floating-button"
+
 
 interface ProductVariant {
     id: number;
@@ -28,27 +29,38 @@ interface Product {
 }
 
 export default function ProductsPage({params}: PageProps) {
+    const toast = useToast();
     const [products, setProducts] = useState<any>([]);
     const productId = params.id;
     useEffect(() => {
         const fetchProducts = async () => {
             try {
                 const {data, error} = await getProduct(params.id);
-                console.log(data);
                 if (error) {
-                    console.error('Error fetching products-variants:', error);
+                    toast({
+                        title: "Error",
+                        description: "Error fetching products-variants",
+                        status: "error",
+                        duration: 9000,
+                        isClosable: true,
+                        position: "top"
+                    });
                     return;
                 }
                 setProducts(data);
             } catch (error) {
-                console.error('Error fetching products-variants:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching products-variants",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
         };
         fetchProducts();
     }, []);
-
-
-
 
 
     return (

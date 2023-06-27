@@ -22,7 +22,14 @@ export default function UpdateProduct({ params }: PageProps) {
         const fetchProductVariant = async () => {
             const { data, error } = await getProductVariant(params.id);
             if (error) {
-                console.error('Error fetching products variant:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching products-variants",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                })
             } else {
                 setProductVariant(data);
                 setPrice(data.price.toString());
@@ -40,7 +47,6 @@ export default function UpdateProduct({ params }: PageProps) {
         event.preventDefault();
 
         if (!price) {
-            console.error('Price must not be blank');
             toast({
                 title: "Price must not be blank",
                 status: "error",
@@ -63,7 +69,6 @@ export default function UpdateProduct({ params }: PageProps) {
             .eq('id', params.id);
 
         if (error) {
-            console.error('Error updating products variant:', error);
             toast({
                 title: "Error updating products variant",
                 description: error.message,
@@ -73,7 +78,6 @@ export default function UpdateProduct({ params }: PageProps) {
                 position: "top"
             })
         } else {
-            console.log('Product variant updated successfully');
             toast({
                 title: "Product variant updated successfully",
                 status: "success",

@@ -26,7 +26,6 @@ export default function OrderList() {
         async function fetchOrders() {
             try {
                 const {data, error} = await getOrderList();
-                console.log(data);
                 if (error) {
                     toast({
                         title: "Error",
@@ -40,7 +39,14 @@ export default function OrderList() {
                 // @ts-ignore
                 setOrders(data);
             } catch (error) {
-                console.error('Error fetching orders:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching orders",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
         }
         fetchOrders();

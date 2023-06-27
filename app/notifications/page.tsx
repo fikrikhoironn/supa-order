@@ -4,7 +4,7 @@ import { supabase } from '@/lib/supabase';
 import {getNotifications} from "@/services/products";
 import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
-import {Center, Spinner, VStack} from "@chakra-ui/react";
+import {Center, Spinner, useToast, VStack} from "@chakra-ui/react";
 import NotificationCard from "@/components/notifications/notification-card";
 
 interface Notification {
@@ -14,6 +14,7 @@ interface Notification {
 }
 
 export default function Notifications() {
+    const toast = useToast();
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
     const channel = supabase
@@ -36,7 +37,14 @@ export default function Notifications() {
         const fetchNotifications = async () => {
             const { data, error } = await getNotifications();
             if (error) {
-                console.error('Error fetching notifications:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching notifications",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             } else {
                 setNotifications(data);
             }

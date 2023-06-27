@@ -5,6 +5,7 @@ import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
 import ProductCard from "@/components/products/product-card";
 import FloatingButton from "@/components/common/floating-button";
+import {useToast} from "@chakra-ui/react";
 
 
 interface Product {
@@ -13,20 +14,34 @@ interface Product {
 }
 
 export default function ProductsPage() {
+    const toast = useToast();
     const [products, setProducts] = useState<any>([]);
 
     useEffect(() => {
         const fetchProducts = async (): Promise<void> => {
             try {
                 const {data, error} = await getProducts();
-                console.log(data);
                 if (error) {
-                    console.error('Error fetching products:', error);
+                    toast({
+                        title: "Error",
+                        description: "Error fetching products",
+                        status: "error",
+                        duration: 9000,
+                        isClosable: true,
+                        position: "top"
+                    });
                     return;
                 }
                 setProducts(data);
             } catch (error) {
-                console.error('Error fetching products:', error);
+                toast({
+                    title: "Error",
+                    description: "Error fetching products",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
         };
         fetchProducts();
