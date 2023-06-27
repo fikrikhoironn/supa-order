@@ -29,6 +29,14 @@ export default function Notifications() {
             (payload) => {
                 // @ts-ignore
                 setNotifications((prevNotifications) => [payload.new, ...prevNotifications ]);
+                toast({
+                    title: "New notification",
+                    description: `New order! ${payload.new.notification_title}`,
+                    status: "success",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
         )
         .subscribe();
