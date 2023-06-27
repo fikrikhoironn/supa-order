@@ -15,10 +15,10 @@ export default function Navbar(){
                             <Link href="/">
                                 <div className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Home</div>
                             </Link>
-                            <Link href="/orders">
+                            <Link href="/orders/">
                                 <div className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Order List</div>
                             </Link>
-                            <Link href="/notifications">
+                            <Link href="/notifications/">
                                 <div className="text-gray-300 hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium">Notifications</div>
                             </Link>
                         </div>

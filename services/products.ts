@@ -1,5 +1,4 @@
 import {supabase} from "@/lib/supabase";
-import exp from "constants";
 
 export const getProduct = async (id: number) => {
     return await supabase
@@ -20,12 +19,6 @@ export const getOrderList = async () => {
         .select('product_variant_id, quantity, products:product_variants(product_id:products(title))');
 };
 
-
-export const showProducts = async () => {
-    return await supabase
-        .from('product_variants')
-        .select('*, product:products(title)')
-}
 
 export const getProductVariants = async () => {
     return await supabase
@@ -58,9 +51,3 @@ export const getProductVariant = async (id: number) => {
 
 }
 
-export const updateProductVariant = async (id: number, price: number) => {
-    return await supabase
-        .from('product_variants')
-        .update({price: price})
-        .eq('id', id);
-}

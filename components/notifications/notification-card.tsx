@@ -1,5 +1,4 @@
-import Link from "next/link";
-import {Text, Card, HStack, Center} from "@chakra-ui/react";
+import {Text, Card, Center} from "@chakra-ui/react";
 
 interface Notification {
     orderId: number;

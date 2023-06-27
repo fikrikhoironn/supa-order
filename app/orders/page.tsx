@@ -1,6 +1,6 @@
 'use client'
 import {useEffect, useState} from 'react';
-import {Table, Thead, Tbody, Tr, Th, Td, TableCaption, Text, Center, Box, Button} from '@chakra-ui/react';
+import {Table, useToast, Thead, Tbody, Tr, Th, Td, TableCaption, Text, Center, Box, Button} from '@chakra-ui/react';
 import {getOrderList} from '@/services/products';
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
@@ -19,6 +19,7 @@ interface Order {
 }
 
 export default function OrderList() {
+    const toast = useToast();
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
@@ -30,7 +31,14 @@ export default function OrderList() {
             const {data, error} = await getOrderList();
             console.log(data);
             if (error) {
-                throw error;
+                toast({
+                    title: "Error",
+                    description: "Error fetching orders",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
             // @ts-ignore
             setOrders(data);

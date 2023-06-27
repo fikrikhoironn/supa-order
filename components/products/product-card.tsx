@@ -6,7 +6,7 @@ interface Product {
     title: string;
 }
 
-export default function ProductCard(props: Product): JSX.Element {
+export default function ProductCard(props: Product) {
     const {id, title} = props;
 
     return (

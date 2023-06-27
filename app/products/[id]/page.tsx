@@ -33,7 +33,8 @@ export default function ProductsPage({params}: PageProps) {
         fetchProducts();
     }, []);
 
-    const fetchProducts = async (): Promise<void> => {
+
+    const fetchProducts = async () => {
         try {
             const {data, error} = await getProduct(params.id);
             console.log(data);
@@ -64,7 +65,7 @@ export default function ProductsPage({params}: PageProps) {
                             <Center my="8">
                                 <HStack>
                                     {product.product_variants.map((variant: ProductVariant) => (
-                                        <ProductVariantCard id={variant.id} price={variant.price}/>
+                                        <ProductVariantCard key={variant.id} id={variant.id} price={variant.price}/>
                                     ))}
                                 </HStack>
                             </Center>

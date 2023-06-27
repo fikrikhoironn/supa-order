@@ -72,7 +72,7 @@ export default function ProductsPage() {
                         size="md"
                         aria-label="Scroll to top"
                     >
-                        <Link   href="/products/create">
+                        <Link href="/products/create/">
                             Add Product
                         </Link>
                     </Button>

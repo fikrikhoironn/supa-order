@@ -6,7 +6,7 @@ interface ProductVariant {
     price: number;
 }
 
-export default function ProductVariantCard(props: ProductVariant): JSX.Element {
+export default function ProductVariantCard(props: ProductVariant) {
     const {id, price} = props;
 
     return (

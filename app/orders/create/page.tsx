@@ -1,8 +1,6 @@
 'use client'
-import { supabase} from "@/lib/supabase";
 import { useEffect, useState } from 'react';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import {getProductVariants, insertOrder, showProducts} from "@/services/products";
+import {getProductVariants, insertOrder} from "@/services/products";
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
 import {Center, VStack, useToast} from "@chakra-ui/react";
@@ -35,7 +33,14 @@ export default function CreateOrder() {
         try {
             const { data, error } = await getProductVariants();
             if (error) {
-                throw error;
+                toast({
+                    title: "Error",
+                    description: "Error fetching products variants",
+                    status: "error",
+                    duration: 9000,
+                    isClosable: true,
+                    position: "top"
+                });
             }
             if (data) {
                 setProductVariants(data);
@@ -49,7 +54,6 @@ export default function CreateOrder() {
         try {
             const { data, error } = await insertOrder(selectedProductVariant, quantity)
             if (error) {
-                throw error;
                 toast({
                     title: "Error",
                     description: "Error creating order",

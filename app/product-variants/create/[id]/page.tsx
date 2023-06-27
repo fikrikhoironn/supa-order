@@ -11,10 +11,6 @@ interface PageProps {
     };
 }
 
-interface Variant {
-    product_id: number;
-    price: number;
-}
 
 export default function CreateVariant({ params }: PageProps) {
     const toast = useToast();
