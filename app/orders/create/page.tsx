@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import {getProductVariants, insertOrder} from "@/services/products";
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
@@ -25,30 +25,29 @@ export default function CreateOrder() {
     const [quantity, setQuantity] = useState<number>(0);
 
     useEffect(() => {
+        const fetchProductVariants = async () => {
+            try {
+                const { data, error } = await getProductVariants();
+                if (error) {
+                    toast({
+                        title: "Error",
+                        description: "Error fetching products variants",
+                        status: "error",
+                        duration: 9000,
+                        isClosable: true,
+                        position: "top"
+                    });
+                }
+                if (data) {
+                    setProductVariants(data);
+                }
+            } catch (error) {
+                console.error('Error fetching products variants:', error);
+            }
+        };
         fetchProductVariants();
     }, []);
 
-
-    async function fetchProductVariants() {
-        try {
-            const { data, error } = await getProductVariants();
-            if (error) {
-                toast({
-                    title: "Error",
-                    description: "Error fetching products variants",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                    position: "top"
-                });
-            }
-            if (data) {
-                setProductVariants(data);
-            }
-        } catch (error) {
-            console.error('Error fetching products variants:', error);
-        }
-    }
 
     async function createOrder() {
         try {

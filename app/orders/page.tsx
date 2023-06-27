@@ -1,10 +1,10 @@
 'use client'
 import {useEffect, useState} from 'react';
-import {Table, useToast, Thead, Tbody, Tr, Th, Td, TableCaption, Text, Center, Box, Button} from '@chakra-ui/react';
+import {Table, useToast, Thead, Tbody, Tr, Th, Td, TableCaption, Text, Center} from '@chakra-ui/react';
 import {getOrderList} from '@/services/products';
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
-import Link from "next/link";
+import FloatingButton from "@/components/common/floating-button";
 
 interface Product {
     product_id: {
@@ -23,29 +23,29 @@ export default function OrderList() {
     const [orders, setOrders] = useState<Order[]>([]);
 
     useEffect(() => {
+        async function fetchOrders() {
+            try {
+                const {data, error} = await getOrderList();
+                console.log(data);
+                if (error) {
+                    toast({
+                        title: "Error",
+                        description: "Error fetching orders",
+                        status: "error",
+                        duration: 9000,
+                        isClosable: true,
+                        position: "top"
+                    });
+                }
+                // @ts-ignore
+                setOrders(data);
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        }
         fetchOrders();
     }, []);
 
-    async function fetchOrders() {
-        try {
-            const {data, error} = await getOrderList();
-            console.log(data);
-            if (error) {
-                toast({
-                    title: "Error",
-                    description: "Error fetching orders",
-                    status: "error",
-                    duration: 9000,
-                    isClosable: true,
-                    position: "top"
-                });
-            }
-            // @ts-ignore
-            setOrders(data);
-        } catch (error) {
-            console.error('Error fetching orders:', error);
-        }
-    }
 
     return (
         <>
@@ -75,37 +75,7 @@ export default function OrderList() {
                         ))}
                     </Tbody>
                 </Table>
-                <Box
-                    position="fixed"
-                    bottom={4}
-                    right={16}
-                    zIndex={999}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="14rem"
-                    height="48px"
-                    borderRadius="2xl"
-                    boxShadow="lg"
-                    bg="teal.500"
-                    color="white"
-                    cursor="pointer"
-                    transition="all 0.3s ease"
-                    _hover={{
-                        transform: 'scale(1.1)',
-                        boxShadow: 'xl',
-                    }}
-                >
-                    <Button
-                        variant="unstyled"
-                        size="md"
-                        aria-label="Scroll to top"
-                    >
-                        <Link href={`/orders/create`}>
-                            Add Order
-                        </Link>
-                    </Button>
-                </Box>
+                <FloatingButton text="Add Order" url={`/orders/create`}/>
 
             </Wrapper>
         </>

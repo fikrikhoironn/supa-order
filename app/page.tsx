@@ -4,8 +4,7 @@ import {getProducts} from "@/services/products";
 import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
 import ProductCard from "@/components/products/product-card";
-import { Box, Button} from "@chakra-ui/react";
-import Link from "next/link";
+import FloatingButton from "@/components/common/floating-button";
 
 
 interface Product {
@@ -17,22 +16,21 @@ export default function ProductsPage() {
     const [products, setProducts] = useState<any>([]);
 
     useEffect(() => {
+        const fetchProducts = async (): Promise<void> => {
+            try {
+                const {data, error} = await getProducts();
+                console.log(data);
+                if (error) {
+                    console.error('Error fetching products:', error);
+                    return;
+                }
+                setProducts(data);
+            } catch (error) {
+                console.error('Error fetching products:', error);
+            }
+        };
         fetchProducts();
     }, []);
-
-    const fetchProducts = async (): Promise<void> => {
-        try {
-            const {data, error} = await getProducts();
-            console.log(data);
-            if (error) {
-                console.error('Error fetching products:', error);
-                return;
-            }
-            setProducts(data);
-        } catch (error) {
-            console.error('Error fetching products:', error);
-        }
-    };
 
     return (
         <>
@@ -46,38 +44,7 @@ export default function ProductsPage() {
                         ))}
                     </div>
                 </div>
-                <Box
-                    position="fixed"
-                    bottom={4}
-                    right={16}
-                    zIndex={999}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="14rem"
-                    height="48px"
-                    borderRadius="2xl"
-                    boxShadow="lg"
-                    bg="teal.500"
-                    color="white"
-                    cursor="pointer"
-                    transition="all 0.3s ease"
-                    _hover={{
-                        transform: 'scale(1.1)',
-                        boxShadow: 'xl',
-                    }}
-                >
-                    <Button
-                        variant="unstyled"
-                        size="md"
-                        aria-label="Scroll to top"
-                    >
-                        <Link href="/products/create/">
-                            Add Product
-                        </Link>
-                    </Button>
-                </Box>
-
+                <FloatingButton text="Add Product" url="/products/create"/>
             </Wrapper>
         </>
     );

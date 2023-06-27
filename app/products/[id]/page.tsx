@@ -3,10 +3,11 @@ import {useEffect, useState} from 'react';
 import {getProduct} from "@/services/products";
 import Wrapper from "@/components/common/wrapper";
 import Navbar from "@/components/common/navbar";
-import {Box, Button, Center, HStack, Text} from "@chakra-ui/react";
+import {Box, Center, HStack, Text} from "@chakra-ui/react";
 import ProductVariantCard from "@/components/product-variants/product-variant-card";
 import Link from "next/link";
 import {FaEdit} from "react-icons/fa";
+import FloatingButton from "@/components/common/floating-button";
 
 interface ProductVariant {
     id: number;
@@ -30,23 +31,24 @@ export default function ProductsPage({params}: PageProps) {
     const [products, setProducts] = useState<any>([]);
     const productId = params.id;
     useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const {data, error} = await getProduct(params.id);
+                console.log(data);
+                if (error) {
+                    console.error('Error fetching products-variants:', error);
+                    return;
+                }
+                setProducts(data);
+            } catch (error) {
+                console.error('Error fetching products-variants:', error);
+            }
+        };
         fetchProducts();
     }, []);
 
 
-    const fetchProducts = async () => {
-        try {
-            const {data, error} = await getProduct(params.id);
-            console.log(data);
-            if (error) {
-                console.error('Error fetching products-variants:', error);
-                return;
-            }
-            setProducts(data);
-        } catch (error) {
-            console.error('Error fetching products-variants:', error);
-        }
-    };
+
 
 
     return (
@@ -72,37 +74,7 @@ export default function ProductsPage({params}: PageProps) {
                         </div>
                     ))}
                 </Box>
-                <Box
-                    position="fixed"
-                    bottom={4}
-                    right={16}
-                    zIndex={999}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    width="14rem"
-                    height="48px"
-                    borderRadius="2xl"
-                    boxShadow="lg"
-                    bg="teal.500"
-                    color="white"
-                    cursor="pointer"
-                    transition="all 0.3s ease"
-                    _hover={{
-                        transform: 'scale(1.1)',
-                        boxShadow: 'xl',
-                    }}
-                >
-                    <Button
-                        variant="unstyled"
-                        size="md"
-                        aria-label="Scroll to top"
-                    >
-                        <Link href={`/product-variants/create/${productId}`}>
-                            Add Variant
-                        </Link>
-                    </Button>
-                </Box>
+                <FloatingButton text="Add Variant" url={`/product-variants/create/${productId}`}/>
             </Wrapper>
         </>
     );
