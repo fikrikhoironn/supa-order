@@ -28,7 +28,7 @@ export default function Notifications() {
             },
             (payload) => {
                 // @ts-ignore
-                setNotifications((prevNotifications) => [...prevNotifications, payload.new]);
+                setNotifications((prevNotifications) => [payload.new, ...prevNotifications ]);
             }
         )
         .subscribe();
@@ -50,7 +50,7 @@ export default function Notifications() {
             }
         };
         fetchNotifications();
-    }, []);
+    }, [toast]);
 
     return (
         <>

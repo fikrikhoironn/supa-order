@@ -60,7 +60,7 @@ export default function ProductsPage({params}: PageProps) {
             }
         };
         fetchProducts();
-    }, []);
+    }, [params.id, toast]);
 
 
     return (

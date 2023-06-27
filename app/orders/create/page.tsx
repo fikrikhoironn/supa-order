@@ -53,7 +53,7 @@ export default function CreateOrder() {
             }
         };
         fetchProductVariants();
-    }, []);
+    }, [toast]);
 
 
     async function createOrder() {

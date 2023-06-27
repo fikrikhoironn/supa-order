@@ -19,7 +19,6 @@ export const getOrderList = async () => {
         .select('product_variant_id, quantity, products:product_variants(product_id:products(title))');
 };
 
-
 export const getProductVariants = async () => {
     return await supabase
         .from('product_variants')

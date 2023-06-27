@@ -39,7 +39,7 @@ export default function UpdateProduct({ params }: PageProps) {
         };
 
         fetchProduct();
-    }, [params.id]);
+    }, [params.id, toast]);
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);

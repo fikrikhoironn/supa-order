@@ -36,7 +36,7 @@ export default function UpdateProduct({ params }: PageProps) {
         };
 
         fetchProductVariant();
-    }, [params.id]);
+    }, [params.id, toast]);
 
     const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setPrice(event.target.value);

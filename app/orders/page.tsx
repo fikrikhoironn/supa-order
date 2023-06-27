@@ -50,7 +50,7 @@ export default function OrderList() {
             }
         }
         fetchOrders();
-    }, []);
+    }, [toast]);
 
 
     return (
