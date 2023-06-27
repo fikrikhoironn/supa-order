@@ -49,7 +49,6 @@ export default function Notifications() {
                 setNotifications(data);
             }
         };
-
         fetchNotifications();
     }, []);
 
@@ -79,7 +78,6 @@ export default function Notifications() {
                         </ul>
                     )}
                 </VStack>
-
             </Wrapper>
         </>
     );

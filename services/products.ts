@@ -29,11 +29,11 @@ export const getProductVariants = async () => {
 export const insertOrder = async (selectedProductVariant: number, quantity: number) => {
     return await supabase
         .from('orders').insert([
-        {
-            product_variant_id: selectedProductVariant,
-            quantity: quantity,
-        },
-    ]);
+            {
+                product_variant_id: selectedProductVariant,
+                quantity: quantity,
+            },
+        ]);
 }
 
 export const getNotifications = async () => {
@@ -48,6 +48,10 @@ export const getProductVariant = async (id: number) => {
         .select('*')
         .eq('id', id)
         .single();
-
 }
 
+export const insertVariant = async (productId: number, price: string) => {
+    return await supabase.from('product_variants').insert([
+        {product_id: Number(productId), price: Number(price)},
+    ]);
+}

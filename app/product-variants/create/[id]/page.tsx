@@ -1,9 +1,9 @@
 'use client'
 import { useState, ChangeEvent, FormEvent } from 'react';
-import { supabase } from '@/lib/supabase';
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
 import {Box, Button, Input, Text, VStack, useToast} from "@chakra-ui/react";
+import {insertVariant} from "@/services/products";
 
 interface PageProps {
     params: {
@@ -33,9 +33,7 @@ export default function CreateVariant({ params }: PageProps) {
             })
             return;
         }
-        const { error } = await supabase.from('product_variants').insert([
-            { product_id: Number(productId), price: Number(price) },
-        ]);
+        const { error } = await insertVariant(productId, price)
 
         if (error) {
             toast({

@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase';
 import Navbar from "@/components/common/navbar";
 import Wrapper from "@/components/common/wrapper";
 import {Box, Button, Input, Text, VStack, useToast, Center, Spinner} from "@chakra-ui/react";
+import {getProduct} from "@/services/products";
 
 interface PageProps {
     params: {
@@ -18,14 +19,9 @@ export default function UpdateProduct({ params }: PageProps) {
     const [dbTitle, setDbTitle] = useState('');
 
     useEffect(() => {
-        // Fetch the product from the database
         const fetchProduct = async () => {
-            const { data, error } = await supabase
-                .from('products')
-                .select('*')
-                .eq('id', params.id)
-                .single();
-
+            const { data, error } = await getProduct(params.id)
+            console.log(data)
             if (error) {
                 toast({
                     title: "Error",
@@ -37,8 +33,8 @@ export default function UpdateProduct({ params }: PageProps) {
                 })
             } else {
                 setProduct(data);
-                setTitle(data.title);
-                setDbTitle(data.title);
+                setTitle(data[0].title);
+                setDbTitle(data[0].title);
             }
         };
 
@@ -68,7 +64,6 @@ export default function UpdateProduct({ params }: PageProps) {
             title: title,
         };
 
-        // Update the product in the database
         const { error } = await supabase
             .from('products')
             .update(updatedProduct)

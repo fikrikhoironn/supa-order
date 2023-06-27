@@ -18,7 +18,6 @@ export default function UpdateProduct({ params }: PageProps) {
     const toast = useToast();
 
     useEffect(() => {
-        // Fetch the products variant from the database
         const fetchProductVariant = async () => {
             const { data, error } = await getProductVariant(params.id);
             if (error) {
@@ -62,7 +61,6 @@ export default function UpdateProduct({ params }: PageProps) {
             price: parseFloat(price),
         };
 
-        // Update the products variant in the database
         const { error } = await supabase
             .from('product_variants')
             .update(updatedProductVariant)
