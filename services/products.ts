@@ -39,7 +39,8 @@ export const insertOrder = async (selectedProductVariant: number, quantity: numb
 export const getNotifications = async () => {
     return await supabase
         .from('notifications')
-        .select('*');
+        .select('*')
+        .order('order_id', {ascending: false})
 }
 
 export const getProductVariant = async (id: number) => {
