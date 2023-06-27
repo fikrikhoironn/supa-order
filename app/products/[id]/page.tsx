@@ -6,6 +6,7 @@ import Navbar from "@/components/common/navbar";
 import {Box, Button, Center, HStack, Text} from "@chakra-ui/react";
 import ProductVariantCard from "@/components/product-variants/product-variant-card";
 import Link from "next/link";
+import {FaEdit} from "react-icons/fa";
 
 interface ProductVariant {
     id: number;
@@ -56,6 +57,9 @@ export default function ProductsPage({params}: PageProps) {
                         <div key={product.id} className="mb-6">
                             <Center>
                                 <Text fontSize="2xl" fontWeight="black">{product.title}</Text>
+                                <Link href={`/products/update/${product.id}`}>
+                                    <FaEdit className="ml-4"/>
+                                </Link>
                             </Center>
                             <Center my="8">
                                 <HStack>

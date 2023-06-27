@@ -23,12 +23,14 @@ export const getOrderList = async () => {
 
 export const showProducts = async () => {
     return await supabase
-        .from('products-variants').select('*');
+        .from('product_variants')
+        .select('*, product:products(title)')
 }
 
 export const getProductVariants = async () => {
     return await supabase
-        .from('product_variants').select('*');
+        .from('product_variants')
+        .select('*, product:products(title)')
 }
 
 export const insertOrder = async (selectedProductVariant: number, quantity: number) => {
